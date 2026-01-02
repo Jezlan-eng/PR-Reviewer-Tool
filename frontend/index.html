@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Instructor PR Review</title>
+</head>
+<body>
+  <h1>PR Review Dashboard</h1>
+  <div id="pr-details"></div>
+  <button onclick="approvePR()">Approve</button>
+  <button onclick="rejectPR()">Reject</button>
+
+  <script>
+    async function loadPR() {
+      const res = await fetch('http://localhost:3000/review');
+      const review = await res.json();
+      document.getElementById('pr-details').innerText = 
+        `Title: ${review.pr.title}\nBranch: ${review.pr.branch}\nAuthor: ${review.pr.author}\nFiles Changed: ${review.pr.filesChanged}\nStatus: ${review.status}\nFeedback: ${review.feedback.join(', ')}`;
+    }
+
+    async function approvePR() {
+      await fetch('http://localhost:3000/review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'APPROVED' })
+      });
+      loadPR();
+    }
+
+    async function rejectPR() {
+      await fetch('http://localhost:3000/review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'REJECTED' })
+      });
+      loadPR();
+    }
+
+    loadPR();
+  </script>
+</body>
+</html>

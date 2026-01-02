@@ -1,0 +1,12 @@
+{
+  "pr": {
+    "title": "Add login feature",
+    "branch": "feature/login",
+    "author": "jezlan123",
+    "filesChanged": 5
+  },
+  "feedback": [
+    "PR looks good"
+  ],
+  "status": "REJECTED"
+}
